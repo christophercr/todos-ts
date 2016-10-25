@@ -36,6 +36,9 @@ Now you can download all the necessary dependencies using the setup script: `npm
 ## Main Scripts
 * `npm run test`: run unit tests with Karma
 * `npm run server`: start the Webpack development server
+* `npm run lint`: check typescript code quality/style
+* `npm run tsc`: compile typescript files into javascript
+* `npm run typings-install`: install typings defined in typings.json file
 
 ## License
 This project and all associated source code is licensed under the terms of the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
