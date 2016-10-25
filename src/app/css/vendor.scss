@@ -1,0 +1,7 @@
+/*
+ Includes/imports all third-party stylesheets used throughout the application.
+ Should be loaded before the application stylesheets
+ IMPORTANT remark: use this file ONLY for stylesheets that NEED autoprefixing. For other ones, add imports to vendor-styles.ts
+ */
+
+/* paths specified below are those at development time. In production everything will be inlined and bundled together */

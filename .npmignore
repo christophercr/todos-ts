@@ -1,15 +1,27 @@
-# Logs
-./logs/
-*.log
+# Project specific
+build/
+__build__/
+src/*/__build__/
+.tmp/
+stats.json
+
+# Sourcemaps
+*.map
 
 # Typings
 typings/
 !src/typings/
 
+# Reports directory
+reports/
+
+# Logs
+./logs/
+*.log
+
 # Node
 node_modules/
 jspm_packages/
-bower_components/
 
 # OS generated files #
 Desktop.ini

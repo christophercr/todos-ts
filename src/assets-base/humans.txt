@@ -1,0 +1,25 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+  nobody -- Project Lead
+
+# THANKS
+
+  Thanks for all the fish
+
+# TECHNOLOGY COLOPHON
+
+  HTML5
+  CSS3
+  Material Design
+  Angular Material
+  Angular
+  TypeScript
+  ES2015
+  RxJS
+  NodeJS
+  NPM
+  Webpack
+  

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="description" content="<%= webpackConfig.metadata.description %>">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Disable tap highlight on IE -->
+	<meta name="msapplication-tap-highlight" content="no">
+	<!-- Add to homescreen -->
+	<link rel="manifest" href="manifest.json">
+	<!-- Fallback to homescreen for Chrome <39 on Android -->
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="application-name" content="AngularJS Webpack seed">
+	<link rel="icon" sizes="192x192" href="assets/images/touch/chrome-touch-icon-192x192.png">
+	<!-- Add to homescreen for Safari on iOS -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="template">
+	<link rel="apple-touch-icon" href="assets/images/touch/apple-touch-icon.png">
+
+	<!-- Reference: https://msdn.microsoft.com/library/dn320426(v=vs.85).aspx -->
+	<meta name="msapplication-TileImage" content="assets/images/touch/ms-touch-icon-144x144-precomposed.png">
+	<meta name="msapplication-TileColor" content="#656970"><!-- Tile icon for Win8 (144x144 + tile color) -->
+	<meta name="msapplication-config" content="none">
+
+	<link rel="icon" type="image/png" sizes="128x128" href="assets/images/touch/icon-128x128.png">
+
+	<!-- Define the toolbar color (Android): http://updates.html5rocks.com/2014/11/Support-for-theme-color-in-Chrome-39-for-Android -->
+	<!-- You can customize the default -->
+	<meta name="theme-color" content="#0076c8">
+
+	<title><%= webpackConfig.metadata.title %></title>
+
+	<!-- Stylesheets -->
+	<!-- Generated CSS stylesheets will be added by webpack: extract-text-webpack-plugin -->
+
+	<!-- base url -->
+	<!-- all relative URLs will use this as base URL: https://developer.mozilla.org/en/docs/Web/HTML/Element/base -->
+	<!-- necessary for HTML5 History API which adds support for pretty URLs (see app.ts) -->
+	<base href="<%- webpackConfig.metadata.baseUrl %>">
+</head>
+
+<body>
+	<!--[if lt IE 8]> 
+		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p> 
+	<![endif]--> 
+
+<app>
+	Loading ...
+</app>
+	
+<% if (webpackConfig.metadata.ENV === "development") { %>
+<!-- Webpack Dev Server reload -->
+<script
+		src="/webpack-dev-server.js"></script>
+<% } %>
+	
+<!-- Generated bundle scripts will be injected by webpack: html-webpack-plugin -->
+</body>
+</html>

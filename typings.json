@@ -1,0 +1,21 @@
+{
+  "dependencies": {},
+  "devDependencies": {},
+  "globalDependencies": {
+	"angular-material": "github:DefinitelyTyped/DefinitelyTyped/angular-material/angular-material.d.ts#aab909252472a20546bd006fc3c8573613c790eb",
+	"angular-mocks": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular-mocks.d.ts#0a23a2055d6f8f40fd39b5c1368ba6232842a057",
+	"angular-translate": "github:DefinitelyTyped/DefinitelyTyped/angular-translate/angular-translate.d.ts#49b81182471d3e8c72b5b8c10d677e09cf9bd751",
+	"angular-ui-router": "github:DefinitelyTyped/DefinitelyTyped/angular-ui-router/angular-ui-router.d.ts#493d44982e5a935e29c79ac933761001211c9ef8",
+	"angularjs": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#3c3bb420351e01a6cb0384cff51aeca43aa60330",
+	"core-js": "github:DefinitelyTyped/DefinitelyTyped/core-js/core-js.d.ts#be0ba281b67575b3b626a6bbb15b152add97244e",
+	"jasmine": "github:DefinitelyTyped/DefinitelyTyped/jasmine/jasmine.d.ts#2a447aaeb05e1047b79114e8a53480f9ee9eefec",
+	"jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#c8a69b0b0c71cc00d4ada94a4420fb037b3cc9cd",
+	"lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#f54f4edaeacd957066ef5155103927f006ff6391",
+	"node": "github:DefinitelyTyped/DefinitelyTyped/node/node-4.d.ts#684fa0d89400dff7497ce9fec7ab3f7376cd27bc",
+	"source-map": "github:DefinitelyTyped/DefinitelyTyped/source-map/source-map.d.ts#50e013312bd6cac0f82452cb7ed58f39d5e25545",
+	"sinon": "github:DefinitelyTyped/DefinitelyTyped/sinon/sinon.d.ts#4bb4c29cad26ee049899b35da7d9502c3c73fde6",
+	"uglify-js": "github:DefinitelyTyped/DefinitelyTyped/uglify-js/uglify-js.d.ts#56295f5058cac7ae458540423c50ac2dcf9fc711",
+	"webpack": "github:DefinitelyTyped/DefinitelyTyped/webpack/webpack.d.ts#b5979947c9bec28a35a1c4189ec21cea12d5dc3d"
+  },
+  "globalDevDependencies": {}
+}
