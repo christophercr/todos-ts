@@ -1,10 +1,11 @@
 "use strict";
 
+import {IComponentOptions} from "angular";
 import {TodoController} from "./todoCtrl";
 
-const templateContent = require("./todo.html");
+const templateContent: string = require("./todo.html");
 
-export const todoComponent = {
+export const todoComponent: IComponentOptions = {
 	template: templateContent,
 	controller: TodoController
 };

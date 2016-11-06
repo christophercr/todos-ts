@@ -21,7 +21,7 @@
 	"no-reference": true,
 	"no-var-requires": false,
 	"typedef": [
-	  false,
+	  true,
 	  "call-signature",
 	  "index-signature",
 	  "parameter",
@@ -76,7 +76,7 @@
 	"no-empty": true,
 	"no-eval": true,
 	"no-invalid-this": true,
-	"no-null-keyword": false,
+	"no-null-keyword": true,
 	"no-shadowed-variable": true,
 	"no-string-literal": false,
 	"no-switch-case-fall-through": true,

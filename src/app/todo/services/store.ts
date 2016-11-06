@@ -1,24 +1,27 @@
 "use strict";
 
+import {ILogService, IHttpService, IHttpPromiseCallbackArg} from "angular";
+import {Todo} from "../components/todo.intf";
+
 export class StoreService {
-	public $http;
-	public $log;
+	public $http: IHttpService;
+	public $log: ILogService;
 
-	public todos;
+	public todos: Todo[];
 
-	public static $inject = ["$http", "$log"];
+	public static $inject: string[] = ["$http", "$log"];
 
-	public constructor($http, $log) {
+	public constructor($http: IHttpService, $log: ILogService) {
 		this.$http = $http;
 		this.$log = $log;
 
 		this.todos = [];
 	}
 
-	public clearCompleted() {
-		let originalTodos = this.todos.slice(0);
+	public clearCompleted(): Promise<any> {
+		let originalTodos: Todo[] = this.todos.slice(0);
 
-		let incompleteTodos = this.todos.filter((todo) => {
+		let incompleteTodos: Todo[] = this.todos.filter((todo: Todo) => {
 			return !todo.completed;
 		});
 
@@ -27,48 +30,48 @@ export class StoreService {
 		return this.$http.delete("api/todos").then(
 			() => {
 				// nothing to do on success
-			}, (resp) => {
+			}, (resp: any) => {
 				this.$log.error("store: delete failed", resp);
 				angular.copy(originalTodos, this.todos);
 			}
 		);
 	};
 
-	public delete(todo) {
-		let originalTodos = this.todos.slice(0);
+	public delete(todo: Todo): Promise<any> {
+		let originalTodos: Todo[] = this.todos.slice(0);
 
 		this.todos.splice(this.todos.indexOf(todo), 1);
 
 		return this.$http.delete("api/todos/" + todo.id).then(
 			() => {
 				// nothing to do on success
-			}, (resp) => {
+			}, (resp: any) => {
 				this.$log.error("store: delete failed", resp);
 				angular.copy(originalTodos, this.todos);
 			}
 		);
 	};
 
-	public get() {
+	public get(): Promise<any> {
 		return this.$http.get("api/todos").then(
-			(resp) => {
+			(resp: IHttpPromiseCallbackArg<Todo[]>) => {
 				angular.copy(resp.data, this.todos);
-			}, (resp) => {
+			}, (resp: any) => {
 				this.$log.error("store: get failed", resp);
 			}
 		);
 	};
 
-	public insert(todo) {
-		let originalTodos = this.todos.slice(0);
+	public insert(todo: Todo): Promise<any> {
+		let originalTodos: Todo[] = this.todos.slice(0);
 
-		let httpPromise = this.$http.post("api/todos", todo);
+		let httpPromise: Promise<any> = this.$http.post("api/todos", todo);
 
 		httpPromise.then(
-			(resp) => {
+			(resp: IHttpPromiseCallbackArg<Todo>) => {
 				todo.id = resp.data["id"];
 				this.todos.push(todo);
-			}, (resp) => {
+			}, (resp: any) => {
 				this.$log.error("store: insert failed", resp);
 				angular.copy(originalTodos, this.todos);
 			}
@@ -77,7 +80,7 @@ export class StoreService {
 		return httpPromise;
 	};
 
-	public put(todo) {
+	public put(todo: Todo): Promise<any> {
 		return this.$http.put("api/todos/" + todo.id, todo);
 	};
 }

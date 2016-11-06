@@ -1,36 +1,40 @@
 "use strict";
 
-export class TodoController {
+import {IController, IScope, IFilterService, IPromise} from "angular";
+import {Todo} from "./todo.intf";
+import {StoreService} from "../services/store";
 
-	public todos;
-	public status;
-	public statusFilter;
+export class TodoController implements IController {
 
-	public saveEvent;
+	public todoTitle: string;
+	public todos: Todo[];
+	public status: string;
+	public statusFilter: any;
 
-	public saving;
-	public newTodo;
-	public originalTodo;
-	public editedTodo;
-	public reverted;
+	public saveEvent: string;
 
-	public remainingCount;
-	public completedCount;
-	public allChecked;
+	public saving: boolean;
+	public originalTodo: Todo;
+	public editedTodo: Todo;
+	public reverted: boolean;
 
-	public $scope;
-	public $filter;
-	public store;
+	public remainingCount: number;
+	public completedCount: number;
+	public allChecked: boolean;
 
-	public static $inject = ["$scope", "$filter", "store"];
+	public $scope: IScope;
+	public $filter: IFilterService;
+	public store: StoreService;
 
-	public constructor($scope, $filter, store) {
+	public static $inject: string[] = ["$scope", "$filter", "store"];
+
+	public constructor($scope: IScope, $filter: IFilterService, store: StoreService) {
 		this.$scope = $scope;
 		this.$filter = $filter;
 		this.store = store;
 	}
 
-	public $onInit() {
+	public $onInit(): void {
 		this.todos = [];
 
 		this.store.get().then(() => {
@@ -44,16 +48,16 @@ export class TodoController {
 		}, true);
 	}
 
-	public showAll(status) {
+	public showAll(status: string): void {
 		this.status = status || "";
 		this.statusFilter = (status === "active") ?
 		{completed: false} : (status === "completed") ?
 		{completed: true} : {};
 	}
 
-	public addTodo() {
-		let newTodo = {
-			title: this.newTodo.trim(),
+	public addTodo(): void {
+		let newTodo: Todo = {
+			title: this.todoTitle.trim(),
 			completed: false
 		};
 
@@ -62,26 +66,26 @@ export class TodoController {
 		}
 
 		this.saving = true;
-		this.store.insert(newTodo)
+		(<IPromise<any>>this.store.insert(newTodo))
 			.then(() => {
-				this.newTodo = "";
+				this.todoTitle = "";
 			})
 			.finally(() => {
 				this.saving = false;
 			});
 	}
 
-	public editTodo(todo) {
+	public editTodo(todo: Todo): void {
 		this.editedTodo = todo;
 		// Clone the original todo to restore it on demand.
 		this.originalTodo = angular.extend({}, todo);
 	};
 
-	public saveEdits(todo, event) {
+	public saveEdits(todo: Todo, event: string): void {
 		// Blur events are automatically triggered after the form submit event.
 		// This does some unfortunate logic handling to prevent saving twice.
 		if (event === "blur" && this.saveEvent === "submit") {
-			this.saveEvent = null;
+			this.saveEvent = undefined;
 			return;
 		}
 
@@ -89,44 +93,44 @@ export class TodoController {
 
 		if (this.reverted) {
 			// Todo edits were reverted-- don't save.
-			this.reverted = null;
+			this.reverted = false;
 			return;
 		}
 
 		todo.title = todo.title.trim();
 
 		if (todo.title === this.originalTodo.title) {
-			this.editedTodo = null;
+			this.editedTodo = undefined;
 			return;
 		}
 
-		this.store[todo.title ? "put" : "delete"](todo)
+		(<IPromise<any>>this.store[todo.title ? "put" : "delete"](todo))
 			.then(() => {
 				// nothing to do on success
 			}, () => {
 				todo.title = this.originalTodo.title;
 			})
 			.finally(() => {
-				this.editedTodo = null;
+				this.editedTodo = undefined;
 			});
 	};
 
-	public revertEdits(todo) {
+	public revertEdits(todo: Todo): void {
 		this.todos[this.todos.indexOf(todo)] = this.originalTodo;
-		this.editedTodo = null;
-		this.originalTodo = null;
+		this.editedTodo = undefined;
+		this.originalTodo = undefined;
 		this.reverted = true;
 	};
 
-	public removeTodo(todo) {
+	public removeTodo(todo: Todo): void {
 		this.store.delete(todo);
 	};
 
-	public saveTodo(todo) {
+	public saveTodo(todo: Todo): void {
 		this.store.put(todo);
 	};
 
-	public toggleCompleted(todo, completed) {
+	public toggleCompleted(todo: Todo, completed: boolean): void {
 		if (angular.isDefined(completed)) {
 			todo.completed = completed;
 		}
@@ -139,18 +143,18 @@ export class TodoController {
 				});
 	};
 
-	public clearCompletedTodos() {
-		let todos = this.todos.slice(0);
+	public clearCompletedTodos(): void {
+		let todos: Todo[] = this.todos.slice(0);
 
-		todos.forEach((todo) => {
+		todos.forEach((todo: Todo) => {
 			if (todo.completed) {
 				this.store.delete(todo);
 			}
 		});
 	};
 
-	public markAll(completed) {
-		this.todos.forEach((todo) => {
+	public markAll(completed: boolean): void {
+		this.todos.forEach((todo: Todo) => {
 			if (todo.completed !== completed) {
 				this.toggleCompleted(todo, completed);
 			}
