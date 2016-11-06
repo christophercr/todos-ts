@@ -2,7 +2,7 @@
 
 import {IModule, ILogService} from "angular";
 
-import {fakeRestServerConfig} from "./fake-rest-server.run";
+import {fakeRestServerConfig} from "./config/fake-rest-server.run";
 
 import {AppController} from "./appCtrl";
 

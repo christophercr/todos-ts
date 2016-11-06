@@ -8,7 +8,7 @@ import SinonFakeServer = Sinon.SinonFakeServer;
 let sinon: SinonStatic = require("sinon/pkg/sinon");
 let fakeRest: any = require("fakerest");
 
-let data: any = require("../api/data.json");
+let data: any = require("../../api/data.json");
 
 export function fakeRestServerConfig($log: ILogService): void {
 	$log.log("api data fetched", data);
