@@ -1,6 +1,6 @@
 "use strict";
 
-import {IController, IScope, IFilterService, IPromise} from "angular";
+import {IController, IScope, IFilterService} from "angular";
 import {Todo} from "./todo.intf";
 import {StoreService} from "../services/store";
 
@@ -66,7 +66,7 @@ export class TodoController implements IController {
 		}
 
 		this.saving = true;
-		(<IPromise<any>>this.store.insert(newTodo))
+		this.store.insert(newTodo)
 			.then(() => {
 				this.todoTitle = "";
 			})
@@ -104,7 +104,7 @@ export class TodoController implements IController {
 			return;
 		}
 
-		(<IPromise<any>>this.store[todo.title ? "put" : "delete"](todo))
+		this.store[todo.title ? "put" : "delete"](todo)
 			.then(() => {
 				// nothing to do on success
 			}, () => {
