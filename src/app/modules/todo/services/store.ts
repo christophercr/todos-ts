@@ -1,6 +1,6 @@
 "use strict";
 
-import {ILogService, IHttpService, IHttpPromiseCallbackArg} from "angular";
+import {ILogService, IHttpService, IHttpPromiseCallbackArg, IPromise} from "angular";
 import {Todo} from "../components/todo.intf";
 
 export class StoreService {
@@ -18,7 +18,7 @@ export class StoreService {
 		this.todos = [];
 	}
 
-	public clearCompleted(): Promise<any> {
+	public clearCompleted(): IPromise<any> {
 		let originalTodos: Todo[] = this.todos.slice(0);
 
 		let incompleteTodos: Todo[] = this.todos.filter((todo: Todo) => {
@@ -37,7 +37,7 @@ export class StoreService {
 		);
 	};
 
-	public delete(todo: Todo): Promise<any> {
+	public delete(todo: Todo): IPromise<any> {
 		let originalTodos: Todo[] = this.todos.slice(0);
 
 		this.todos.splice(this.todos.indexOf(todo), 1);
@@ -52,7 +52,7 @@ export class StoreService {
 		);
 	};
 
-	public get(): Promise<any> {
+	public get(): IPromise<any> {
 		return this.$http.get("api/todos").then(
 			(resp: IHttpPromiseCallbackArg<Todo[]>) => {
 				angular.copy(resp.data, this.todos);
@@ -62,10 +62,10 @@ export class StoreService {
 		);
 	};
 
-	public insert(todo: Todo): Promise<any> {
+	public insert(todo: Todo): IPromise<any> {
 		let originalTodos: Todo[] = this.todos.slice(0);
 
-		let httpPromise: Promise<any> = this.$http.post("api/todos", todo);
+		let httpPromise: IPromise<any> = this.$http.post("api/todos", todo);
 
 		httpPromise.then(
 			(resp: IHttpPromiseCallbackArg<Todo>) => {
@@ -80,7 +80,7 @@ export class StoreService {
 		return httpPromise;
 	};
 
-	public put(todo: Todo): Promise<any> {
+	public put(todo: Todo): IPromise<any> {
 		return this.$http.put("api/todos/" + todo.id, todo);
 	};
 }
