@@ -1,7 +1,18 @@
-<todo-list new-todo="$ctrl.newTodo"
-		   todos="$ctrl.todos"
-		   on-insert="$ctrl.insertTodo(todo)"
-		   on-save="$ctrl.saveTodo(todo, originalTodo)"
-		   on-delete="$ctrl.deleteTodo(todo)"
-		   on-toggle="$ctrl.toggleTodo(todo)">
-</todo-list>
+<section id="todoapp">
+	<header id="header">
+		<h1>todos</h1>
+		<add-todo new-todo="$ctrl.newTodo"
+				  on-insert="$ctrl.insertTodo(todo)">
+		</add-todo>
+	</header>
+	<todo-list 
+			   todos="$ctrl.todos"
+			   on-save="$ctrl.saveTodo(todo, originalTodo)"
+			   on-delete="$ctrl.deleteTodo(todo)"
+			   on-toggle="$ctrl.toggleTodo(todo)">
+	</todo-list>
+</section>
+<footer id="info">
+	<p>Double-click to edit a todo</p>
+	<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>

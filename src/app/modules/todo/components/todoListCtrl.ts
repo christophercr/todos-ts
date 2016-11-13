@@ -5,9 +5,7 @@ import {Todo} from "../services/todo.intf";
 
 export class TodoListController implements IController {
 
-	public newTodo: Todo;
 	public todos: Todo[];
-	public onInsert: Function;
 	public onSave: Function;
 	public onDelete: Function;
 	public onToggle: Function;
@@ -17,7 +15,6 @@ export class TodoListController implements IController {
 
 	public saveEvent: string;
 
-	public saving: boolean;
 	public originalTodo: Todo;
 	public editedTodo: Todo;
 	public reverted: boolean;
@@ -43,9 +40,6 @@ export class TodoListController implements IController {
 			this.completedCount = this.todos.length - this.remainingCount;
 			this.allChecked = !this.remainingCount;
 		}
-		if (onChangesObj["newTodo"]) {
-			this.newTodo = onChangesObj["newTodo"].currentValue;
-		}
 	}
 
 	public showAll(status: string): void {
@@ -53,22 +47,6 @@ export class TodoListController implements IController {
 		this.statusFilter = (status === "active") ?
 		{completed: false} : (status === "completed") ?
 		{completed: true} : {};
-	}
-
-	public addTodo(): void {
-		this.newTodo.title.trim();
-
-		if (!this.newTodo.title) {
-			return;
-		}
-
-		this.saving = true;
-
-		this.onInsert({
-			todo: this.newTodo
-		});
-
-		this.saving = false;
 	}
 
 	public editTodo(todo: Todo): void {

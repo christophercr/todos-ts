@@ -3,6 +3,7 @@
 import {IModule, ILogService, ITimeoutService} from "angular";
 
 import {todosPageComponent} from "./pages/todosPage";
+import {addTodoComponent} from "./components/addTodo";
 import {todoListComponent} from "./components/todoList";
 import {TodoEscapeDirective} from "./directives/todoEscape";
 import {TodoFocusDirective} from "./directives/todoFocus";
@@ -12,6 +13,7 @@ export const todoModule: IModule = angular.module("todo", []);
 
 todoModule
 	.component("todosPage", todosPageComponent)
+	.component("addTodo", addTodoComponent)
 	.component("todoList", todoListComponent)
 
 	.directive("todoEscape", ["$log", ($log: ILogService) => new TodoEscapeDirective($log)])
