@@ -27,46 +27,54 @@ export class TodosPageController implements IController {
 	}
 
 	private fetchTodos(): void {
-		this.store.get().then(() => {
-			this.todos = this.store.todos;
-		});
+		this.store.get().subscribe(
+			() => { // next()
+				this.todos = this.store.todos;
+			}
+		);
 	}
 
 	public insertTodo(todo: Todo): void {
-		this.store.insert(todo)
-			.then(() => {
+		this.store.insert(todo).subscribe(
+			() => { // next()
 				this.fetchTodos();
 				// re-initialize newTodo
 				this.newTodo = {
 					title: "",
 					completed: false
 				};
-			});
+			}
+		);
 	}
 
 	public saveTodo(todo: Todo, originalTodo: Todo): void {
-		this.store[todo.title ? "put" : "delete"](todo)
-			.then(() => {
+		this.store[todo.title ? "put" : "delete"](todo).subscribe(
+			() => { // next()
 				this.fetchTodos();
-			}, () => {
+			},
+			() => { // error()
 				todo.title = originalTodo.title;
-			});
+			}
+		);
 	}
 
 	public deleteTodo(todo: Todo): void {
-		this.store.delete(todo)
-			.then(() => {
+		this.store.delete(todo).subscribe(
+			() => { // next()
 				this.fetchTodos();
-			});
+			}
+		);
 	}
 
 	public toggleTodo(todo: Todo): void {
-		this.store.put(todo)
-			.then(() => {
+		this.store.put(todo).subscribe(
+			() => { // next()
 				this.fetchTodos();
 				// nothing to do on success
-			}, () => {
+			},
+			() => { // error()
 				todo.completed = !todo.completed;
-			});
+			}
+		);
 	}
 }

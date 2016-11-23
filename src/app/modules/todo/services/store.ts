@@ -1,7 +1,12 @@
 "use strict";
 
-import {ILogService, IHttpService, IHttpPromiseCallbackArg, IPromise} from "angular";
+import {ILogService, IHttpService, IHttpPromiseCallbackArg} from "angular";
 import {Todo} from "./todo.intf";
+import {Observable} from "rxjs/Observable";
+import {fromPromise} from "rxjs/observable/fromPromise";
+import {empty} from "rxjs/observable/empty";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/catch";
 
 export class StoreService {
 	public $http: IHttpService;
@@ -18,63 +23,63 @@ export class StoreService {
 		this.todos = [];
 	}
 
-	public clearCompleted(): IPromise<any> {
+	public clearCompleted(): Observable<IHttpPromiseCallbackArg<Todo[]>> {
 		let incompleteTodos: Todo[] = this.todos.filter((todo: Todo) => {
 			return !todo.completed;
 		});
 
-		return this.$http.delete("api/todos").then(
-			() => {
+		return fromPromise(this.$http.delete("api/todos"))
+			.map((resp: IHttpPromiseCallbackArg<Todo[]>) => {
 				this.todos = [...incompleteTodos];
-			}, (resp: any) => {
-				this.$log.error("store: delete failed", resp);
-			}
-		);
+			})
+			.catch((error: any) => {
+				this.$log.error("store: delete failed", error);
+				return empty(); // catch() should always return an observable
+			});
 	};
 
-	public delete(todo: Todo): IPromise<any> {
-		return this.$http.delete("api/todos/" + todo.id).then(
-			() => {
+	public delete(todo: Todo): Observable<IHttpPromiseCallbackArg<any>> {
+		return fromPromise(this.$http.delete("api/todos/" + todo.id))
+			.map((resp: IHttpPromiseCallbackArg<any>) => {
 				let newTodos: Todo[] = [...this.todos];
 				newTodos.splice(newTodos.indexOf(todo), 1);
 				this.todos = newTodos;
-			}, (resp: any) => {
-				this.$log.error("store: delete failed", resp);
-			}
-		);
+			})
+			.catch((error: any) => {
+				this.$log.error("store: delete failed", error);
+				return empty(); // catch() should always return an observable
+			});
 	};
 
-	public get(): IPromise<any> {
-		return this.$http.get("api/todos").then(
-			(resp: IHttpPromiseCallbackArg<Todo[]>) => {
+	public get(): Observable<IHttpPromiseCallbackArg<Todo[]>> {
+		return fromPromise(this.$http.get("api/todos"))
+			.map((resp: IHttpPromiseCallbackArg<Todo[]>) => {
 				angular.copy(resp.data, this.todos);
-			}, (resp: any) => {
-				this.$log.error("store: get failed", resp);
-			}
-		);
+			})
+			.catch((error: any) => {
+				this.$log.error("store: get failed", error);
+				return empty(); // catch() should always return an observable
+			});
 	};
 
-	public insert(todo: Todo): IPromise<any> {
+	public insert(todo: Todo): Observable<IHttpPromiseCallbackArg<Todo[]>> {
 		let originalTodos: Todo[] = this.todos.slice(0);
 
-		let httpPromise: IPromise<any> = this.$http.post("api/todos", todo);
-
-		httpPromise.then(
-			(resp: IHttpPromiseCallbackArg<Todo>) => {
+		return fromPromise(this.$http.post("api/todos", todo))
+			.map((resp: IHttpPromiseCallbackArg<Todo>) => {
 				todo.id = resp.data["id"];
 				this.todos = [...this.todos, todo];
-			}, (resp: any) => {
-				this.$log.error("store: insert failed", resp);
+			})
+			.catch((error: any) => {
+				this.$log.error("store: insert failed", error);
 				angular.copy(originalTodos, this.todos);
-			}
-		);
-
-		return httpPromise;
+				return empty(); // catch() should always return an observable
+			});
 	};
 
-	public put(todo: Todo): IPromise<any> {
-		return this.$http.put("api/todos/" + todo.id, todo)
-			.then(() => {
+	public put(todo: Todo): Observable<any> {
+		return fromPromise(this.$http.put("api/todos/" + todo.id, todo))
+			.map((resp: IHttpPromiseCallbackArg<any>) => {
 				this.todos = [...this.todos];
 			});
 	};
