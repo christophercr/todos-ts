@@ -11,7 +11,7 @@ export class TodoListController implements IController {
 	public onToggle: Function;
 
 	public status: string;
-	public statusFilter: any;
+	public filteredTodos: Todo[];
 
 	public saveEvent: string;
 
@@ -29,22 +29,33 @@ export class TodoListController implements IController {
 		// ...
 	}
 
+	public $onInit(): void {
+		this.status = "";
+	}
+
 	public $onChanges(onChangesObj: IOnChangesObject): void {
-		console.log("--------", onChangesObj);
+		console.log("--------TodoListComponent", onChangesObj);
 		if (onChangesObj["todos"]) {
 			this.todos = onChangesObj["todos"].currentValue;
 
-			this.remainingCount = this.todos.filter((todo:Todo) => todo.completed === false).length;
+			this.remainingCount = this.todos.filter((todo: Todo) => todo.completed === false).length;
 			this.completedCount = this.todos.length - this.remainingCount;
 			this.allChecked = !this.remainingCount;
+
+			this.showAll(this.status);
 		}
 	}
 
 	public showAll(status: string): void {
 		this.status = status || "";
-		this.statusFilter = (status === "active") ?
-		{completed: false} : (status === "completed") ?
-		{completed: true} : {};
+
+		if (this.status === "active") {
+			this.filteredTodos = this.todos.filter((todo: Todo) => todo.completed === false);
+		} else if (status === "completed") {
+			this.filteredTodos = this.todos.filter((todo: Todo) => todo.completed === true);
+		} else {
+			this.filteredTodos = [...this.todos];
+		}
 	}
 
 	public editTodo(todo: Todo): void {
