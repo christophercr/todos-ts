@@ -1,6 +1,6 @@
 "use strict";
 
-import {IController, IOnChangesObject, IFilterService} from "angular";
+import {IController, IOnChangesObject} from "angular";
 import {Todo} from "../services/todo.intf";
 
 export class TodoListController implements IController {
@@ -23,12 +23,10 @@ export class TodoListController implements IController {
 	public completedCount: number;
 	public allChecked: boolean;
 
-	public $filter: IFilterService;
+	public static $inject: string[] = [];
 
-	public static $inject: string[] = ["$filter"];
-
-	public constructor($filter: IFilterService) {
-		this.$filter = $filter;
+	public constructor() {
+		// ...
 	}
 
 	public $onChanges(onChangesObj: IOnChangesObject): void {
@@ -36,7 +34,7 @@ export class TodoListController implements IController {
 		if (onChangesObj["todos"]) {
 			this.todos = onChangesObj["todos"].currentValue;
 
-			this.remainingCount = this.$filter("filter")(this.todos, {completed: false}).length;
+			this.remainingCount = this.todos.filter((todo:Todo) => todo.completed === false).length;
 			this.completedCount = this.todos.length - this.remainingCount;
 			this.allChecked = !this.remainingCount;
 		}
