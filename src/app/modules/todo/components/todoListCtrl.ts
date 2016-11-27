@@ -52,7 +52,7 @@ export class TodoListController implements IController {
 	public editTodo(todo: Todo): void {
 		this.editedTodo = todo;
 		// Clone the original todo to restore it on demand.
-		this.originalTodo = angular.extend({}, todo);
+		this.originalTodo = Object.assign({}, todo);
 	};
 
 	public saveEdits(todo: Todo, event: string): void {
@@ -100,7 +100,7 @@ export class TodoListController implements IController {
 	};
 
 	public toggleCompleted(todo: Todo, completed: boolean): void {
-		if (angular.isDefined(completed)) {
+		if (typeof completed !== "undefined") {
 			todo.completed = completed;
 		}
 

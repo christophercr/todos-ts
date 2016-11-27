@@ -54,7 +54,7 @@ export class StoreService {
 	public get(): Observable<IHttpPromiseCallbackArg<Todo[]>> {
 		return fromPromise(this.$http.get("api/todos"))
 			.map((resp: IHttpPromiseCallbackArg<Todo[]>) => {
-				angular.copy(resp.data, this.todos);
+				this.todos = [...resp.data];
 			})
 			.catch((error: any) => {
 				this.$log.error("store: get failed", error);
@@ -72,7 +72,7 @@ export class StoreService {
 			})
 			.catch((error: any) => {
 				this.$log.error("store: insert failed", error);
-				angular.copy(originalTodos, this.todos);
+				this.todos = [...originalTodos];
 				return empty(); // catch() should always return an observable
 			});
 	};
@@ -81,6 +81,10 @@ export class StoreService {
 		return fromPromise(this.$http.put("api/todos/" + todo.id, todo))
 			.map((resp: IHttpPromiseCallbackArg<any>) => {
 				this.todos = [...this.todos];
+			})
+			.catch((error: any) => {
+				this.$log.error("store: put failed", error);
+				return empty(); // catch() should always return an observable
 			});
 	};
 }
