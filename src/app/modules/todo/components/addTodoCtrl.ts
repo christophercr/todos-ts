@@ -17,7 +17,7 @@ export class AddTodoController implements IController {
 	}
 
 	public $onChanges(onChangesObj: IOnChangesObject): void {
-		console.log("--------", onChangesObj);
+		console.log("--------AddTodoComponent", onChangesObj);
 		if (onChangesObj["newTodo"]) {
 			this.newTodo = onChangesObj["newTodo"].currentValue;
 		}

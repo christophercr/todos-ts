@@ -1,19 +1,19 @@
 <section id="main" ng-show="$ctrl.todos.length" ng-cloak>
-	<input id="toggle-all" title="Toggle All" type="checkbox" ng-model="$ctrl.allChecked"
+	<input id="toggle-all" title="Toggle All" type="checkbox" name="toggleAll" ng-model="$ctrl.allChecked"
 		   ng-click="$ctrl.markAll($ctrl.allChecked)">
 	<label for="toggle-all">Mark all as complete</label>
 	<ul id="todo-list">
 		<li ng-repeat="todo in $ctrl.filteredTodos track by $index"
 			ng-class="{completed: todo.completed, editing: todo == $ctrl.editedTodo}">
 			<div class="view">
-				<input class="toggle" title="Toggle" type="checkbox" ng-model="todo.completed"
+				<input class="toggle" title="Toggle" type="checkbox" name="{{'toggle'+$index}}" ng-model="todo.completed"
 					   ng-change="$ctrl.toggleCompleted(todo)">
 				<label ng-dblclick="$ctrl.editTodo(todo)">{{todo.title}}</label>
 				<button class="destroy" ng-click="$ctrl.removeTodo(todo)"></button>
 			</div>
 			<form ng-submit="$ctrl.saveEdits(todo, 'submit')">
-				<input class="edit" ng-trim="false" ng-model="todo.title" todo-escape="$ctrl.revertEdits(todo)"
-					   ng-blur="$ctrl.saveEdits(todo, 'blur')" todo-focus="todo == $ctrl.editedTodo">
+				<input class="edit" ng-trim="false" name="editTodo" ng-model="todo.title" todo-escape="$ctrl.revertEdits(todo)"
+					   ng-blur="$ctrl.saveEdits(todo, 'blur')" todo-focus="todo === $ctrl.editedTodo">
 			</form>
 		</li>
 	</ul>
