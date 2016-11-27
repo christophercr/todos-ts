@@ -97,6 +97,7 @@ export class TodoListController implements IController {
 
 	public revertEdits(todo: Todo): void {
 		this.todos[this.todos.indexOf(todo)] = this.originalTodo;
+		this.showAll(this.status);
 		this.editedTodo = undefined;
 		this.originalTodo = undefined;
 		this.reverted = true;
